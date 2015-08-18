@@ -1100,11 +1100,12 @@ var FormValidator = A.Component.create({
                     var rule = defaults.RULES[ruleName];
                     var fieldValue = trim(field.val());
 
-                    ruleValue = instance.normalizeRuleValue(ruleValue);
+                    if (fieldValue || (ruleName == "required")) {
+                        ruleValue = instance.normalizeRuleValue(ruleValue);
 
-                    if (isFunction(rule) && !rule.apply(instance, [fieldValue, field, ruleValue])) {
-
-                        instance.addFieldError(field, ruleName);
+                        if (isFunction(rule) && !rule.apply(instance, [fieldValue, field, ruleValue])) {
+                            instance.addFieldError(field, ruleName);
+                        }
                     }
                 }
             );
